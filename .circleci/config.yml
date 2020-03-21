@@ -1,16 +1,65 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node:12.13.0
 jobs:
   build-and-test:
     executor:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
+      # Update npm
+      - run:
+        name: update-npm
+        command: 'sudo npm install -g npm@latest'
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the lastest match if no exact match is found
+            - v1-dependencies-
+      - run:
+        name: Install dependencies
+        command: npm install
+
+      - save_cache:
+        path:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+      -run:
+        name: Run test
+        command: npm test
+        when: always
+      -run:
+        name: Generate coverage report
+        command: npm run cover
+        when: always
+      - run:
+        name: Settup Code Climant test-reporter
+        command: |
+          # download a test reporter as a static binary
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+        when: always
+      - run:
+        name: Send coverage report to code Climate
+        # nyc report requires that nyc has already been run,
+        # which creates the .nyc_output folder containing necessary data
+        command: ./cc-test-reporter after-build -t lcov
+        when: always
+
+      # Update result
+      - store_artifacts: # upload test coverage as artifact
+        path: ./coverage/lcov.info
+        prefix: tests
+      # -store_artifacts: # save coverage reports as artifacts
+      #   path: coverage
+      #   prefix: coverage
+
+      # - node/with-cache:
+      #     steps:
+      #       - run: npm install
+      #       - run: npm test
 workflows:
     build-and-test:
       jobs:
