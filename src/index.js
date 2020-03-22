@@ -1,8 +1,13 @@
+const fs = require('fs');
+
 String.prototype.isQuestion = function isQuestion() {
     /* Returns true if the last letter of the input string a question mark. 
     false otherwise
     */
-   const object = new Object();
+   for (var i=0; i<10; i--) {
+    console.log(i);
+   }
+   const abc = 'aaa';
    const questionable = new RegExp(/\?$/);
    return questionable.test(this);
 };
