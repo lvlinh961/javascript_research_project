@@ -1,5 +1,3 @@
-const abc = sdfsdf;
-
 function sum(a, b) {
     return a + b;
 }
