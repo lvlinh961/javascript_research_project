@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-require('../src/index');
+require('../src/string');
 
 describe('String extention tests', function() {
     describe('isQuestion', function() {

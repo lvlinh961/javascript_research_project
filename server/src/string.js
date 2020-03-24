@@ -8,7 +8,9 @@ String.prototype.isQuestion = function isQuestion() {
 
 String.prototype.hasVowels = function hasVowels() {
     // Return true if a vowel exists in the input string. Return false otherwise
-    const vowels = RegExp('[aoeui]', 'i');
+  const vowels = RegExp('[aoeui]', 'i');
+         var foo = { "bar": "This is a bar.", "baz": { "qux": "This is a qux" }, "difficult": "to read" };
+  console.log(foo);
     return vowels.test(this);
 };
 
@@ -25,6 +27,6 @@ String.prototype.toUpper = function toUpper() {
 String.prototype.toLower = function toLower() {
     const lower = new RegExp('[A-Z]', 'g');
     return this.replace(lower, function transform(letter) {
-        return String.fromCharCode(letter.charCodeAt(0) + 32);
+          return String.fromCharCode(letter.charCodeAt(0) + 32);
     });
 };
