@@ -13,12 +13,12 @@ jobs:
                 name: update-npm
                 command: 'sudo npm install -g npm@latest'
             # Download and cache dependencies
-            - restore_cache:
-                working_directory: server
-                keys:
-                    - v1-dependencies-{{ checksum "./server/package-lock.json" }}
-                    # fallback to using the latest cache if no exact match is found
-                    - v1-dependencies-
+            # - restore_cache:
+            #     working_directory: server
+            #     keys:
+            #         - v1-dependencies-{{ checksum "./server/package-lock.json" }}
+            #         # fallback to using the latest cache if no exact match is found
+            #         - v1-dependencies-
             - run: 
                 name: Install dependencies
                 command: cd server && npm install
@@ -48,6 +48,7 @@ jobs:
                 when: always
             - run:
                 name: Send coverage report to Code Climate
+                working_directory: server
                 command:
                     # nyc report requires that nyc has already been run,
                     # which creates the .nyc_output folder containing necessary data
