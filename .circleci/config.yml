@@ -8,14 +8,10 @@ jobs:
         working_directory: ~/repo
         steps:
             - checkout
-            # Go to server directory
-            - run:
-                name: go-to-server-directory
-                command: cd server
             # Update npm
             - run:
                 name: update-npm
-                command: 'sudo npm install -g npm@latest'
+                command: server && 'sudo npm install -g npm@latest'
             # Download and cache dependencies
             - restore_cache:
                 keys:
@@ -24,7 +20,7 @@ jobs:
                     - v1-dependencies-
             - run: 
                 name: Install dependencies
-                command: npm install
+                command: server && npm install
             - save_cache:
                 paths:
                     - node_modules
@@ -33,12 +29,12 @@ jobs:
             # Run mocha tests
             - run:
                 name: Run tests
-                command: npm test
+                command: server && npm test
                 when: always
             # Run coverage
             - run:
                 name: Run coverage
-                command: npm run cover
+                command: server && npm run cover
                 when: always
             # Run coverage report for Code Climate
             - run:
