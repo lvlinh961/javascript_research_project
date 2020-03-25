@@ -52,7 +52,7 @@ jobs:
                 command:
                     # nyc report requires that nyc has already been run,
                     # which creates the .nyc_output folder containing necessary data
-                    ./server/cc-test-reporter after-build -t lcov
+                    ./cc-test-reporter after-build -t lcov
                 when: always
             # Upload results
             - store_artifacts: # upload test coverage as artifact
