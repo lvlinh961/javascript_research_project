@@ -5,3 +5,4 @@ server/.nyc_output
 server/node_modules/
 server/package-lock.json
 .vscode
+.env

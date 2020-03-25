@@ -1,0 +1,46 @@
+version: '3'
+
+services: 
+#######################################
+#   Setup server container
+#######################################
+    server:
+        container_name: node-research-server
+        build: ./server
+        expose: 
+            - ${APP_SERVER_PORT}
+        environment: 
+            MONGO_URI: ${MONGO_URI}
+            API_HOST: ${API_HOST}
+            PORT: ${APP_SERVER_PORT}
+        ports: 
+            - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
+        volumes: 
+            - ./server:/app
+        depends_on: 
+            - mongo
+        command: npm start
+#######################################
+#   Setup client container
+#######################################
+    client:
+        container_name: node-research-client
+        build: ./client
+        environment: 
+            REACT_APP_PORT: ${REACT_APP_PORT}
+        expose: 
+            - ${REACT_APP_PORT}
+        ports: 
+            - ${REACT_APP_PORT}:${REACT_APP_PORT}
+        volumes: 
+            - ./client:/app
+        links: 
+            - server
+#######################################
+#   Setup mongo container
+#######################################
+    mongo:
+        container_name: node-research-mongo
+        image: mongo
+        ports: 
+            - 27017:27017

@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "cover": "nyc --reporter=lcov --reporter=text mocha"
+    "cover": "nyc --reporter=lcov --reporter=text mocha",
+    "start": "node ./src/index.js"
   },
   "author": "lvlinh",
   "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.24.0",
-    "@typescript-eslint/parser": "^2.24.0",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
     "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
