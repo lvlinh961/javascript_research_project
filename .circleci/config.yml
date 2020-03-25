@@ -16,7 +16,7 @@ jobs:
             - restore_cache:
                 working_directory: server
                 keys:
-                    - v1-dependencies-{{ checksum "package-lock.json" }}
+                    - v1-dependencies-{{ checksum "./server/package-lock.json" }}
                     # fallback to using the latest cache if no exact match is found
                     - v1-dependencies-
             - run: 
@@ -25,7 +25,7 @@ jobs:
             - save_cache:
                 paths:
                     - node_modules
-                key: v1-dependencies-{{ checksum "package-lock.json" }}
+                key: v1-dependencies-{{ checksum "./server/package-lock.json" }}
             # - run: mkdir reports
             # Run mocha tests
             - run:
@@ -42,18 +42,18 @@ jobs:
                 name: Setup Code Climate test-reporter
                 command: |
                     # download test reporter as a static binary
-                    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./server/cc-test-reporter
                     chmod +x ./cc-test-reporter
-                    ./cc-test-reporter before-build
+                    ./server/cc-test-reporter before-build
                 when: always
             - run:
                 name: Send coverage report to Code Climate
                 command:
                     # nyc report requires that nyc has already been run,
                     # which creates the .nyc_output folder containing necessary data
-                    ./cc-test-reporter after-build -t lcov
+                    ./server/cc-test-reporter after-build -t lcov
                 when: always
             # Upload results
             - store_artifacts: # upload test coverage as artifact
-                path: ./coverage/lcov.info
+                path: ./server/coverage/lcov.info
                 prefix: tests
