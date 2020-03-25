@@ -11,7 +11,7 @@ jobs:
             # Update npm
             - run:
                 name: update-npm
-                command: ./server && 'sudo npm install -g npm@latest'
+                command: cd server && 'sudo npm install -g npm@latest'
             # Download and cache dependencies
             - restore_cache:
                 keys:
@@ -20,7 +20,7 @@ jobs:
                     - v1-dependencies-
             - run: 
                 name: Install dependencies
-                command: ./server && npm install
+                command: cd server && npm install
             - save_cache:
                 paths:
                     - node_modules
@@ -29,12 +29,12 @@ jobs:
             # Run mocha tests
             - run:
                 name: Run tests
-                command: ./server && npm test
+                command: cd server && npm test
                 when: always
             # Run coverage
             - run:
                 name: Run coverage
-                command: ./server && npm run cover
+                command: cd server && npm run cover
                 when: always
             # Run coverage report for Code Climate
             - run:
