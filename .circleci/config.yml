@@ -14,6 +14,7 @@ jobs:
                 command: 'sudo npm install -g npm@latest'
             # Download and cache dependencies
             - restore_cache:
+                working_directory: server
                 keys:
                     - v1-dependencies-{{ checksum "package-lock.json" }}
                     # fallback to using the latest cache if no exact match is found
