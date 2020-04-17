@@ -4,5 +4,6 @@ server/coverage
 server/.nyc_output
 server/node_modules/
 server/package-lock.json
+server/dist
 .vscode
 .env

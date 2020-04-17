@@ -1,3 +1,5 @@
+console.log(Math.ceil(3.1));
+
 String.prototype.isQuestion = function isQuestion() {
     /* Returns true if the last letter of the input string a question mark. 
     false otherwise
